@@ -1,2 +1,2 @@
 # kjb
-The path of the rightious man is beset on all sides
+The path of the righteous man is beset on all sides.
