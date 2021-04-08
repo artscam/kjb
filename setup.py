@@ -7,5 +7,6 @@ setup(name='kjb',
       author='Arthur Scammell',
       author_email='artscam@gmail.com',
       packages=['kjb',
-                'kjb.src']
+                'kjb.src'
+		'kjb.script']
       )
