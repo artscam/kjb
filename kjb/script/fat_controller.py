@@ -1,12 +1,38 @@
 import kjb.src.LSTM_functions as lf
+import pickle  # This package is used to store variables
+import os
 
-#input_text is a placeholder that can be generalised in the future
-input_text = open("bible.txt").read()
+skip_fit = True # Skip weights calculation by setting to True
+
+# dirname= os.path.dirname("full_bible.txt")
+# sourcename = os.path.join(dirname,"../../test/data/full_bible.txt")
+sourcename = ("bible.txt")
+input_text = open(sourcename).read()
+
+filename = 'globalsave.pkl' # where to save model model weights
+filename2="stored_variables" # and the corresponding variables
+seq_length = 100 # length of individual sequence must be specified
+eps = 20 # epochs for model.fit
 
 processed_inputs = lf.tokenise_words(input_text)
 
-# length of individual sequence must be specified
-seq_length = 100
-X, y, chars = lf.define_sequences(processed_inputs,seq_length)
-print(X[2,10],y[1,10],chars[15])
-#lf.lstm_model(X, y, chars)
+X, y, chars, x_data = lf.define_sequences(processed_inputs,seq_length)
+
+if skip_fit == False:
+
+    lf.lstm_model(X, y, eps)
+
+    # Store X, y, and chars so they can be loaded from previous calculations
+    outfile = open(filename2,'wb')
+    pickle.dump([X, y, chars],outfile)
+    outfile.close()
+
+else:
+    # load the session again:
+    infile = open(filename2,'rb')
+    [X, y, chars] = pickle.load(infile)
+    infile.close()
+
+blasphemy = lf.write_passage(X, y, chars, seq_length, x_data)
+
+print(blasphemy)
