@@ -125,11 +125,11 @@ def write_passage(X, y, chars, seq_length, x_data):
         prediction = model.predict(temp_x, verbose=0)
         index = numpy.argmax(prediction)
         # result = num_to_char[index]
-        #
+
         # sys.stdout.write(result)
 
         pattern.append(index)
         pattern = pattern[1:len(pattern)]
-
+    print(prediction)
     print("\"", ''.join([num_to_char[value] for value in pattern]), "\"")
     return pattern
